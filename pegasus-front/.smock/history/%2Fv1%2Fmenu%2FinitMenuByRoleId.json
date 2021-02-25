@@ -1,0 +1,166 @@
+{
+  "4f959a511738d788d52c183d5cc3c2b14f75e592": {
+    "method": "GET",
+    "request": {
+      "params": {
+        "roleId": "1"
+      },
+      "body": {}
+    },
+    "response": {
+      "path": "/v1/menu/initMenuByRoleId",
+      "status": 200,
+      "headers": {
+        "access-control-allow-methods": "GET, POST, PUT,DELETE,PATCH",
+        "access-control-allow-headers": "authorization,pragma,cache-control,content-type",
+        "access-control-allow-credentials": "true",
+        "access-control-max-age": "3600",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+        "pragma": "no-cache",
+        "expires": "0",
+        "x-frame-options": "DENY",
+        "content-type": "application/json;charset=UTF-8",
+        "transfer-encoding": "chunked",
+        "date": "Fri, 03 Jul 2020 04:43:25 GMT"
+      },
+      "data": [
+        {
+          "id": 1,
+          "sort": 0,
+          "code": "Platform",
+          "name": "系统管理",
+          "path": "",
+          "type": "directory",
+          "levelPath": "0",
+          "parentId": 0,
+          "isLeaf": false,
+          "leftClass": "fa fa-circle-o",
+          "isActive": true,
+          "routerData": [
+            {
+              "id": 2,
+              "sort": 0,
+              "code": "Platform.MenuTree",
+              "name": "菜单配置",
+              "path": "/platform/menuTree",
+              "type": "funcMenu",
+              "levelPath": "0/1/2",
+              "parentId": 1,
+              "isLeaf": true,
+              "leftClass": "fa fa-circle-o",
+              "isActive": true
+            },
+            {
+              "id": 3,
+              "sort": 1,
+              "code": "Platform.RoleManagment",
+              "name": "角色管理",
+              "path": "/platform/roleManagement",
+              "type": "funcMenu",
+              "levelPath": "0/1",
+              "parentId": 1,
+              "isLeaf": true,
+              "leftClass": "fa fa-circle-o",
+              "isActive": true
+            },
+            {
+              "id": 4,
+              "sort": 2,
+              "code": "Platform.AccountManagment",
+              "name": "帐号管理",
+              "path": "/platform/accountManagement",
+              "type": "funcMenu",
+              "levelPath": "0/1",
+              "parentId": 1,
+              "isLeaf": true,
+              "leftClass": "fa fa-circle-o",
+              "isActive": true
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "sort": 1,
+          "code": "Activiti",
+          "name": "流程管理",
+          "path": "",
+          "type": "directory",
+          "levelPath": "0",
+          "parentId": 0,
+          "isLeaf": false,
+          "leftClass": "fa fa-circle-o",
+          "isActive": true,
+          "routerData": [
+            {
+              "id": 6,
+              "sort": 0,
+              "code": "Activiti.ProcessDefinition",
+              "name": "流程设计",
+              "path": "/activiti/processDefinition",
+              "type": "funcMenu",
+              "levelPath": "0/5",
+              "parentId": 5,
+              "isLeaf": true,
+              "leftClass": "fa fa-circle-o",
+              "isActive": true
+            },
+            {
+              "id": 7,
+              "sort": 1,
+              "code": "Activiti.ProcessTest",
+              "name": "流程测试",
+              "path": "/activiti/processTest",
+              "type": "funcMenu",
+              "levelPath": "0/5",
+              "parentId": 5,
+              "isLeaf": true,
+              "leftClass": "fa fa-circle-o",
+              "isActive": true
+            },
+            {
+              "id": 8,
+              "sort": 2,
+              "code": "Activiti.ProcessTodoTask",
+              "name": "待办任务(管理员)",
+              "path": "/activiti/processTodoTask",
+              "type": "funcMenu",
+              "levelPath": "0/5",
+              "parentId": 5,
+              "isLeaf": true,
+              "leftClass": "fa fa-circle-o",
+              "isActive": true
+            },
+            {
+              "id": 9,
+              "sort": 3,
+              "code": "Activiti.ProcessMonitor",
+              "name": "流程监控",
+              "path": "/activiti/processMonitor",
+              "type": "funcMenu",
+              "levelPath": "0/5",
+              "parentId": 5,
+              "isLeaf": true,
+              "leftClass": "fa fa-circle-o",
+              "isActive": true
+            },
+            {
+              "id": 10,
+              "sort": 4,
+              "code": "Activiti.WorkflowTodoTask",
+              "name": "我的待办列表",
+              "path": "/activiti/processMonitor",
+              "type": "funcMenu",
+              "levelPath": "0/5",
+              "parentId": 5,
+              "isLeaf": true,
+              "leftClass": "fa fa-circle-o",
+              "isActive": true
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

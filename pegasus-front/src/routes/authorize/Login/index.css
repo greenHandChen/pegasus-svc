@@ -1,0 +1,11 @@
+:local(.login-form) {
+    max-width: 300px;
+}
+
+:local(.login-form-forgot) {
+    float: right;
+}
+
+:local(.login-form-button) {
+    width: 100%;
+}

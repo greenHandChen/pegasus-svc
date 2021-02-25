@@ -1,0 +1,9 @@
+{
+  "apiList": [
+    "/v1/user/self",
+    "/v1/menu/initMenuByRoleId"
+  ],
+  "interceptList": [
+    "/v1/user/self"
+  ]
+}
