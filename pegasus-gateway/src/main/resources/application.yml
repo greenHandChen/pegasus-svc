@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: pegasus-gateway
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      - id: pall
+        uri: lb://pegasus-all
+        predicates:
+        - Path=/all/**
+      - id: poauth
+        uri: lb://pegasus-oauth
+        predicates:
+        - Path=/oauth/**
+        filters:
+        - PreserveHostHeader
+
+ribbon:
+  ReadTimeout: ${RIBBON_READ_TIMEOUT:30000}
+  ConnectTimeout: ${RIBBON_CONNECT_TIMEOUT:6000}
+
+logging:
+  config: classpath:config/log/logback-spring-ceh.xml
+
+pegasus:
+  gateway:
+    jwt-key: pegasus
+    skip-paths:
+      - /oauth/**

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true">
+    <!-- 引入springboot的logback基础配置 -->
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <!-- 设置基路径 -->
+    <property name="LOG_PATH" value="/app/logs"/>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/pegasus.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 每小时滚动文件 -->
+            <fileNamePattern>${LOG_PATH}/pegasus.%d{yyyy-MM-dd_HH}.%i.log</fileNamePattern>
+            <!--<maxHistory>5</maxHistory>-->
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 100MB -->
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <charset>utf-8</charset>
+            <pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.pegasus" level="DEBUG"/>
+    <logger name="org.hibernate" level="ERROR"/>
+    <logger name="javax.activation" level="ERROR"/>
+    <logger name="javax.mail" level="ERROR"/>
+    <logger name="javax.xml.bind" level="ERROR"/>
+    <logger name="ch.qos.logback" level="ERROR"/>
+    <logger name="com.codahale.metrics" level="ERROR"/>
+    <logger name="com.ryantenney" level="ERROR"/>
+    <logger name="com.sun.xml.internal.bind" level="ERROR"/>
+    <logger name="com.zaxxer" level="ERROR"/>
+    <logger name="io.undertow" level="ERROR"/>
+    <logger name="org.redisson" level="ERROR"/>
+    <logger name="io.netty" level="ERROR"/>
+    <logger name="sun.net.www.protocol.http" level="ERROR"/>
+    <logger name="org.apache" level="ERROR"/>
+    <logger name="org.bson" level="ERROR"/>
+    <logger name="org.springframework" level="DEBUG"/>
+    <logger name="org.thymeleaf" level="ERROR"/>
+    <logger name="org.xnio" level="ERROR"/>
+    <logger name="springfox" level="ERROR"/>
+    <logger name="sun.rmi" level="ERROR"/>
+    <logger name="io.lettuce.core.protocol" level="ERROR"/>
+    <logger name="com.netflix.discovery" level="ERROR"/>
+    <logger name="io.lettuce.core.RedisChannelHandler" level="ERROR"/>
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <root level="DEBUG">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>

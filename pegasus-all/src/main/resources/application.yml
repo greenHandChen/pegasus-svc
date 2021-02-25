@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: pegasus-all
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/pegasus?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: root
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        format_sql: true
+        use_sql_comments: true
+  redis:
+    host: localhost
+    port: 6379
+#    password: ${SPRING_REDIS_PASSWORD:3pc4=1iv8n7.G4?S}
+  main:
+    allow-bean-definition-overriding: true
+
+mybatis:
+  mapperLocations: classpath*:/mapper/*.xml
+  configuration: # 数据库下划线转驼峰配置
+    mapUnderscoreToCamelCase: true
+
+logging:
+  config: classpath:config/log/logback-spring-ceh.xml
+
+pegasus:
+  security:
+    oauth2:
+      client:
+        access-token-uri: http://localhost:8079/oauth/token
+        client-id: localhost
+        client-secret: 123456
+        grant-type: client_credentials
+        authentication-scheme: form
+
+rocketmq:
+  name-server: 10.206.36.22:9876;10.206.36.22:9876
+#spring security 5
+  #1.必须配置passwordencoder
+  #2.数据库存储的密码必须被passwordencoder加密

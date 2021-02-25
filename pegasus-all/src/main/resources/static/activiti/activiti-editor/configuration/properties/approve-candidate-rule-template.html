@@ -1,0 +1,229 @@
+<div ng-controller="ApproveRuleInstanceCtrl">
+  <div>
+    <button id="approve-rule-btn" type="button" class="layui-btn layui-btn-xs layui-btn-primary chose-approver-btn">
+      选择
+    </button>
+  </div>
+  <script>
+    jQuery('#approve-rule-btn').on('click', function () {
+      var dataSource = [];
+
+      var appElement = document.querySelector('[ng-controller=ApproveRuleInstanceCtrl]');
+      var $scope = angular.element(appElement).scope();
+      if ($scope && $scope.assignment) {
+        $scope.assignment.forEach(function (assignment) {
+          dataSource.push({
+            id: assignment.id,
+            ruleName: assignment.description,
+            ruleCode: assignment.code
+          })
+        })
+      }
+
+      layui.layer.open({
+        type: 1,
+        title: '候选审批人',
+        area: ['500px', '580px'], //宽高
+        content: '<div>' +
+          '<button id="approve-rule-add" type="button" class="layui-btn layui-btn-normal">新建</button>' +
+          '<button id="approve-rule-save" type="button" class="layui-btn">保存</button>' +
+          '<table class="layui-hide" id="approve-rule-table"></table>' +
+          '</div>',
+        success: function () {
+          renderTable(dataSource);
+          initToolBar(dataSource);
+        }
+      });
+    });
+
+    /**
+     * @Author: enHui.Chen
+     * @Description: 初始化工具条
+     * @Data 2019/9/25
+     */
+    function initToolBar(dataSource) {
+      // 新建
+      jQuery('#approve-rule-add').on('click', function () {
+        dataSource.push({id: generateUUID()});
+        renderTable(dataSource);
+      });
+      // 保存
+      jQuery('#approve-rule-save').on('click', function () {
+        layui.layer.confirm('确定保存吗？', {
+          btn: ['确定', '取消'] //按钮
+        }, function (index) {
+          assembleData(dataSource);
+          layui.layer.close(index);
+        }, function () {
+
+        });
+      });
+    }
+
+    /**
+     * @Author: enHui.Chen
+     * @Description: 渲染表格
+     * @Data 2019/9/25
+     */
+    function renderTable(dataSource) {
+      layui.table.render({
+        page: true,
+        limit: 10,
+        elem: '#approve-rule-table',
+        data: dataSource,
+        done: function () {
+          handleApproveRuleAdd(dataSource);
+        },
+        cols: [[
+          {
+            field: 'id',
+            hide: true
+          },
+          {
+            field: 'ruleName',
+            title: '候选审批人',
+            align: 'center',
+            width: 198,
+            templet: function (row) {
+              return row.ruleName ? row.ruleName :
+                ('<button id=approve-rule-add-' + row.id + ' type="button" class="layui-btn layui-btn-xs layui-btn-primary">选择候选人</button>');
+            }
+          },
+          {
+            field: 'ruleCode',
+            title: '候选审批人编码',
+            align: 'center',
+            width: 198
+          },
+          {
+            title: '操作',
+            align: 'center',
+            width: 100,
+            templet: function (row) {
+              return '<button id=approve-rule-delete-' + row.id + ' type="button" class="layui-btn layui-btn-xs layui-btn-primary">删除</button>'
+            }
+          }
+        ]]
+      });
+    }
+
+    /**
+     * @Author: enHui.Chen
+     * @Description: 新建
+     * @Data 2019/9/25
+     */
+    function handleApproveRuleAdd(dataSource) {
+      dataSource.forEach(function (data) {
+        var $addApproverBtn = jQuery('#approve-rule-add-' + data.id);
+        var $deleteApproverBtn = jQuery('#approve-rule-delete-' + data.id);
+        $addApproverBtn.unbind('click');
+        $deleteApproverBtn.unbind('click');
+        $addApproverBtn.on('click', function (e) {
+          renderCandidateLov({
+            id: 'chose-approver-table',
+            title: '请选择候选审批人',
+            dataSource: 'http://localhost:8079/v1/activiti/approve-rule/list?enabled=true',
+            selected: function (row) {
+              var sourceId = jQuery(e.target).attr('id');
+              dataSource.forEach(function (data) {
+                if (sourceId === ('approve-rule-add-' + data.id)) {
+                  data.ruleName = row.ruleName;
+                  data.ruleCode = row.ruleCode;
+                  renderTable(dataSource);
+                }
+              })
+            },
+            cols: [[
+              {
+                field: 'id',
+                hide: true
+              },
+              {
+                field: 'ruleName',
+                title: '候选审批人',
+                align: 'center',
+                width: 218
+              },
+              {
+                field: 'ruleCode',
+                title: '候选审批人编码',
+                align: 'center',
+                width: 218
+              }
+            ]]
+          });
+        });
+        $deleteApproverBtn.on('click', function (e) {
+          layui.layer.confirm('确定删除吗？', {
+            btn: ['确定', '取消'] //按钮
+          }, function (index) {
+            var sourceId = jQuery(e.target).attr('id');
+            dataSource.forEach(function (data, index) {
+              if (sourceId === ('approve-rule-delete-' + data.id)) {
+                dataSource.splice(index, 1);
+                renderTable(dataSource);
+                return;
+              }
+            });
+            assembleData(dataSource);
+            layui.layer.close(index);
+          }, function () {
+
+          });
+        })
+      })
+    }
+
+    /**
+     * @Author: enHui.Chen
+     * @Description: 候选人LOV
+     * @Data 2019/9/25
+     */
+    function renderCandidateLov(options) {
+      var id = options.id;
+      var index = layui.layer.open({
+        type: 1,
+        title: options.title,
+        area: [options.width ? options.width : '440px', options.height ? options.height : '550px'], //宽高
+        content: '<div><table class="layui-hide" id="' + id + '" lay-filter="' + id + '"></table></div>',
+        success: function (e) {
+          layui.table.render({
+            page: true,
+            limit: 10,
+            elem: '#' + id,
+            url: options.dataSource,
+            cols: options.cols
+          });
+
+          layui.table.on('rowDouble(' + id + ')', function (row) {
+            options.selected(row.data);
+            layui.layer.close(index);
+          });
+        }
+      });
+    }
+
+    /**
+     * @Author: enHui.Chen
+     * @Description: 组装数据调用保存方法
+     * @Data 2019/10/23
+     */
+    function assembleData(dataSource) {
+      var approveRuleData = [];
+      dataSource.forEach(function (data, index) {
+        if (data.ruleCode) {
+          approveRuleData.push({
+            id: index,
+            code: data.ruleCode,
+            description: data.ruleName
+          });
+        }
+      })
+      var appElement = document.querySelector('[ng-controller=ApproveRuleInstanceCtrl]');
+      var $scope = angular.element(appElement).scope();
+      $scope.assignment = approveRuleData;
+      $scope.save();
+      $scope.$apply();
+    }
+  </script>
+</div>
