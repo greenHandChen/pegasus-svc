@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <title th:text="#{screen.success.header}"></title>
+</head>
+
+<body id="cas">
+<div layout:fragment="content">
+  <div class="alert alert-success">
+    <h2 th:utext="#{screen.success.header}"/>
+    <p th:utext="#{screen.success.success(${principal.id})}"/>
+    <br>
+    <p th:utext="#{screen.success.security}"/>
+  </div>
+</div>
+</body>
+</html>

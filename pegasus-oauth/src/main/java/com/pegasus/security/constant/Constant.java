@@ -9,6 +9,8 @@ import java.util.Set;
 public class Constant {
     public static final Set<String> ALLOW_ORIGIN = new HashSet<>();
 
+    public static final String PE_OAUTH = "poauth";
+
     // 跨域可访问主机列表
     static {
         ALLOW_ORIGIN.add("http://localhost");

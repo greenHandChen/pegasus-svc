@@ -1,6 +1,7 @@
 package com.pegasus.security.filter;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -67,8 +68,10 @@ public class JwtAuthenticationFilter implements Filter {
                     SecurityContextHolder.clearContext();
                 }
                 if (debug) {
-                    log.debug("No jwt-token in request, will continue chain.");
+                    log.debug("No jwt-token in request");
                 }
+                ((HttpServletResponse) servletResponse).sendError(HttpStatus.UNAUTHORIZED.value(), "no No jwt-token in request");
+                return;
             } else {
                 request.setAttribute(OAuth2AuthenticationDetails.ACCESS_TOKEN_VALUE, authentication.getPrincipal());
                 if (authentication instanceof AbstractAuthenticationToken) {

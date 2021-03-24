@@ -18,6 +18,7 @@ spring:
   redis:
     host: localhost
     port: 6379
+    database: 14
   #    password: ${SPRING_REDIS_PASSWORD:3pc4=1iv8n7.G4?S}
   main:
     allow-bean-definition-overriding: true
@@ -40,3 +41,20 @@ pegasus:
         client-secret: 123456
         grant-type: client_credentials
         authentication-scheme: form
+  oauth:
+    login:
+      page: /login
+    sso:
+      # 是否启用sso
+      enabled: true
+      # sso服务端
+      server-url: http://localhost:9090/cas
+      # sso登录地址
+      server-login: ${pegasus.oauth.sso.server-url}/login
+      server-logout: ${pegasus.oauth.sso.server-url}/logout?service=${pegasus.oauth.sso.cas-service}
+      cas-service: http://localhost:8080/oauth
+      # cas客户端拦截器路径
+      cas-service-login: /login/cas
+      # cas客户端注销
+      cas-service-logout: /logout
+

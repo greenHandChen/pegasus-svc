@@ -1,0 +1,12 @@
+{
+  "@class" : "org.apereo.cas.services.RegexRegisteredService",
+  "serviceId" : "^(http|https|imaps)://localhost:8180/fh.*",
+  "name" : "fh",
+  "id" : 10000003,
+  "description" : "fh",
+  "evaluationOrder" : 10000,
+  "logoutUrl": "http://localhost:8180/fh/logout",
+  "usernameAttributeProvider": {
+    "@class": "org.apereo.cas.services.DefaultRegisteredServiceUsernameProvider"
+  }
+}

@@ -1,12 +1,19 @@
 package com.gh.pegasus.support;
 
-import com.pegasus.common.exception.CommonException;
+import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.core.io.buffer.DataBufferFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -37,7 +44,7 @@ public class GatewayFilterHelperChain implements WebFilter {
     public Mono<Void> filter(ServerWebExchange serverWebExchange, WebFilterChain webFilterChain) {
         // 初始化上下文
         GatewayContext gatewayContext = initGatewayContext(serverWebExchange);
-        ServerWebExchange webEx;
+        ServerWebExchange webEx = null;
         try {
             InnerGatewayFilterHelperChain innerGatewayFilterChain = new InnerGatewayFilterHelperChain(this.gatewayFilters);
             innerGatewayFilterChain.doFilter(gatewayContext, innerGatewayFilterChain);
@@ -47,6 +54,32 @@ public class GatewayFilterHelperChain implements WebFilter {
                     .mutate()
                     .request(builder -> gatewayContext.getAdditionalHeaders().forEach(builder::header))
                     .build();
+        } catch (FeignException fException) {
+            ServerHttpResponse serverHttpResponse = gatewayContext.getServerHttpResponse();
+            StringBuilder responseMessage = new StringBuilder();
+
+            int status = fException.status();
+            // 未授权抛出异常
+            if (status == HttpStatus.UNAUTHORIZED.value()) {
+                HttpStatus requestStatus = HttpStatus.UNAUTHORIZED;
+                // head
+                HttpHeaders headers = serverHttpResponse.getHeaders();
+                headers.put(HttpHeaders.ACCEPT_CHARSET, Collections.singletonList("utf-8"));
+                headers.put(HttpHeaders.CONTENT_TYPE, Collections.singletonList("text/html;charset=UTF-8"));
+                // status
+                serverHttpResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
+                // body
+                responseMessage
+                        .append("<oauth>")
+                        .append("<status>").append(requestStatus.toString()).append("</status>")
+                        .append("<code>").append(requestStatus.value()).append("</code>")
+                        .append("<message>").append(requestStatus.toString()).append("</message>")
+                        .append("</oauth>");
+            }
+            DataBufferFactory factory = serverHttpResponse.bufferFactory();
+            DataBuffer dataBuffer = factory.wrap(responseMessage.toString().getBytes(StandardCharsets.UTF_8));
+            return serverHttpResponse.writeAndFlushWith(Flux.just(dataBuffer).map(Flux::just));
+
         } finally {
             clearGatewayContext();
 

@@ -55,9 +55,11 @@ export function request(url, options) {
 
   return fetch(newUrl, newOptions)
     .then(res => {
-      const cacheLocation = encodeURIComponent(window.location.href);
+      // 401未授权
       if (res.status === 401) {
-        window.open(`${AUTH_URL}&redirect_uri=${cacheLocation}`, '_self');
+        // const cacheLocation = encodeURIComponent(window.location.href);
+        // return window.location.href = `${AUTH_URL}&redirect_uri=${cacheLocation}`;
+        return window.location.href = `${AUTH_URL}`;
       }
       // no-content
       if (res.status === 204) {
@@ -65,6 +67,7 @@ export function request(url, options) {
       }
       return newOptions.responseType === 'text' ? res.text : res.json();
     }).catch(err => {
+
       if (err) {
         notification.error({
           description: JSON.stringify(err)

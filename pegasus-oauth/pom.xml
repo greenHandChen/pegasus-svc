@@ -55,5 +55,12 @@
             <artifactId>pegasus-platform-plugin</artifactId>
             <version>0.0.1.RELEAE</version>
         </dependency>
+
+        <!-- sso -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-cas</artifactId>
+            <version>5.0.9.RELEASE</version>
+        </dependency>
     </dependencies>
 </project>

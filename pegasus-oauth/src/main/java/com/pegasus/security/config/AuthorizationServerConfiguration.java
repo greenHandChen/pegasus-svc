@@ -1,6 +1,7 @@
 package com.pegasus.security.config;
 
 import com.pegasus.security.custom.authentication.oauth.ResourceOwnerNoPasswordTokenGranter;
+import com.pegasus.security.processors.oauth2.AuthorizationPostProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
@@ -47,7 +48,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Autowired
     @Qualifier("cuxUserService")
     private UserDetailsService userDetailsService;
-
+    @Autowired
+    private List<AuthorizationPostProcessor> authorizationPostProcessors;
 //    @Autowired
 //    @Qualifier("jwtTokenStore")
 //    private TokenStore jwtTokenStore;
@@ -82,7 +84,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
                 // 设置JWT增强
 //                .tokenEnhancer(jwtAccessTokenConverter)
-
+                .setAuthorizationPostProcessors(authorizationPostProcessors)
                 .setClientDetailsService(clientDetailsService);
     }
 
