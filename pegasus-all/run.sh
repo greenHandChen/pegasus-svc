@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo ">>> git pull"
-#git pull
+git pull
 
 echo ">>> mvn clean package"
 mvn clean install  package
