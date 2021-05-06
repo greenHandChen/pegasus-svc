@@ -14,7 +14,7 @@ import java.security.Principal;
  * Created by enHui.Chen on 2020/9/14.
  */
 @RestController
-@RequestMapping("/api/oauth")
+@RequestMapping("/oauth")
 public class OauthLoginController {
     @Autowired
     private Oauth2LoginService oauthLoginService;
@@ -24,8 +24,4 @@ public class OauthLoginController {
         return ResponseEntity.ok(oauthLoginService.getOauth2AccessToken(request));
     }
 
-    @GetMapping("/user")
-    public Principal user(Principal principal) {
-        return principal;
-    }
 }

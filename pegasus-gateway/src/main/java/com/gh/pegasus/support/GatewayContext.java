@@ -8,6 +8,7 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.security.jwt.JwtHelper;
 import org.springframework.security.jwt.crypto.sign.Signer;
+import org.springframework.util.MultiValueMap;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -67,6 +68,10 @@ public class GatewayContext {
         String accessToken = ServerRequestUtil.getHeaderByName(serverHttpRequest, ACCESS_TOKEN_HEADER);
         if (StringUtils.startsWithIgnoreCase(accessToken, ACCESS_TOKEN_TYPE)) {
             return accessToken.substring(ACCESS_TOKEN_TYPE.length());
+        }
+        if(StringUtils.isEmpty(accessToken)){
+            MultiValueMap<String, String> queryParams = serverHttpRequest.getQueryParams();
+            return queryParams.getFirst("access_token");
         }
         return accessToken;
     }

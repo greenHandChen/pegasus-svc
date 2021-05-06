@@ -1,6 +1,7 @@
 package com.pegasus.security.config;
 
 import com.pegasus.security.CustomAuthenticationSuccessHandler;
+import com.pegasus.security.CustomLogoutSuccessHandler;
 import com.pegasus.security.custom.authentication.provider.NoUserDetailsAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  * Created by enHui.Chen on 2019/9/3.
@@ -32,12 +34,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomAuthenticationSuccessHandler authenticationSuccessHandler;
     @Autowired
+    private CustomLogoutSuccessHandler customLogoutSuccessHandler;
+    @Autowired(required = false)
     private CasAuthenticationEntryPoint casAuthenticationEntryPoint;
     @Autowired
     private PeSecurityProperties peSecurityProperties;
 
     public static final String[] PERMIT_ALL_PATH = {"/login", "/login/**", "/jquery/**", "/bootstrap/**",
-            "/img/**", "/layui/**", "/oauth/token", "/actuator/**"};
+            "/img/**", "/layui/**", "/oauth/token", "/oauth/no-password", "/actuator/**"};
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -48,7 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
         final String loginPage = peSecurityProperties.getLogin().getPage();
-        final String logoutPage = peSecurityProperties.getLogin().getPage();
+        final String logoutPage = peSecurityProperties.getLogout().getPage();
 
         httpSecurity
                 .authorizeRequests()
@@ -60,7 +64,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().loginPage(loginPage).successHandler(this.authenticationSuccessHandler)
                 .and()
-                .logout().logoutUrl(logoutPage).logoutSuccessUrl(loginPage) // 配置注销路径，注销成功后跳转到/login路径
+                .logout().logoutUrl(logoutPage).logoutSuccessHandler(customLogoutSuccessHandler)
                 .and()
                 .csrf().disable();
         // 设置自定义provider

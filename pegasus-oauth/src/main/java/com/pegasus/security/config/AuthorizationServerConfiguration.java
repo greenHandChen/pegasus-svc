@@ -48,7 +48,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Autowired
     @Qualifier("cuxUserService")
     private UserDetailsService userDetailsService;
-    @Autowired
+    @Autowired(required = false)
     private List<AuthorizationPostProcessor> authorizationPostProcessors;
 //    @Autowired
 //    @Qualifier("jwtTokenStore")

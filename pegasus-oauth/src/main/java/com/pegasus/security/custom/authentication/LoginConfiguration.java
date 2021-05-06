@@ -27,15 +27,11 @@ public class LoginConfiguration {
 
     @Autowired
     private List<AuthorizationServerConfigurer> configurers = Collections.emptyList();
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private AuthorizationServerTokenServices authorizationServerTokenServices;
 
-    private final AuthenticationManager authenticationManager;
-    private final AuthorizationServerTokenServices authorizationServerTokenServices;
-
-    public LoginConfiguration(AuthenticationManager authenticationManager,
-                              AuthorizationServerTokenServices authorizationServerTokenServices) {
-        this.authenticationManager = authenticationManager;
-        this.authorizationServerTokenServices = authorizationServerTokenServices;
-    }
 
     @PostConstruct
     public void init() {

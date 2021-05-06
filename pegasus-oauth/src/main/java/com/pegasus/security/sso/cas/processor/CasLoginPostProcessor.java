@@ -1,12 +1,15 @@
 package com.pegasus.security.sso.cas.processor;
 
 import com.pegasus.common.redis.RedisHelper;
+import com.pegasus.security.config.PeSecurityProperties;
 import com.pegasus.security.processors.oauth2.AuthorizationPostProcessor;
 import com.pegasus.security.sso.cas.constants.CasConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +22,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @Component
+@ConditionalOnProperty(value = PeSecurityProperties.PREFIX + ".sso.enabled", havingValue = "true")
 public class CasLoginPostProcessor implements AuthorizationPostProcessor {
     @Autowired
     private RedisHelper redisHelper;
@@ -43,11 +47,12 @@ public class CasLoginPostProcessor implements AuthorizationPostProcessor {
         if (log.isDebugEnabled()) {
             log.debug("casTicket is :{}, access_token is :{}", casTicket, token);
         }
-        // ticket-token
-        redisHelper.strSet(CasConstant.SSO_CAS_TICKET_TOKEN + casTicket, token, 24, TimeUnit.HOURS);
-        // token-ticket
-        redisHelper.strSet(CasConstant.SSO_CAS_TOKEN_TICKET + token, casTicket, 24, TimeUnit.HOURS);
-
+        if (!StringUtils.isEmpty(casTicket) && !StringUtils.isEmpty(token)) {
+            // ticket-token
+            redisHelper.strSet(CasConstant.SSO_CAS_TICKET_TOKEN + casTicket, token, 24, TimeUnit.HOURS);
+            // token-ticket
+            redisHelper.strSet(CasConstant.SSO_CAS_TOKEN_TICKET + token, casTicket, 24, TimeUnit.HOURS);
+        }
         return process(request, response);
     }
 

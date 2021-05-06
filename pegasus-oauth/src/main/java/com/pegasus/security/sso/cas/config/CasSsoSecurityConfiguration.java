@@ -12,6 +12,7 @@ import org.jasig.cas.client.session.SingleSignOutFilter;
 import org.jasig.cas.client.validation.Cas20ServiceTicketValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,6 +35,7 @@ import java.util.List;
  */
 @Order(Integer.MAX_VALUE - 1)
 @Configuration
+@ConditionalOnProperty(value = PeSecurityProperties.PREFIX + ".sso.enabled", havingValue = "true")
 public class CasSsoSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private PeSecurityProperties peSecurityProperties;

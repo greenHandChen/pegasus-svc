@@ -14,10 +14,10 @@ import java.util.Map;
 @FeignClient(
         value = "pegasus-oauth",
         fallbackFactory = POauthFeignClientFallbackFactory.class,
-        path = "/oauth/api"
+        path = "/oauth"
 )
 public interface POauthFeignClient {
 
-    @GetMapping("/oauth/user")
+    @GetMapping("/api/oauth/user")
     Map<String,Object> user(@RequestParam Principal principal, @RequestHeader(name = "Authorization") String Token);
 }

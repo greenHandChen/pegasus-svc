@@ -47,9 +47,14 @@ module.exports = [
   /** 平台功能路由 end */
   /** 测试路由 start */
   {
-    path: '/test',
+    path: '/test/code',
     models: [],
-    component: 'test'
+    component: 'test/code'
+  },
+  {
+    path: '/test/onlyoffice',
+    models: [],
+    component: 'test/onlyoffice'
   }
   /** 测试路由 end */
 ]

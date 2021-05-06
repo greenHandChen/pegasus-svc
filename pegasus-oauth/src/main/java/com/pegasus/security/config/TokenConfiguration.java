@@ -48,8 +48,8 @@ public class TokenConfiguration {
      * @Description: 自定义令牌服务
      * @Data 2020/9/24
      */
-    @Bean
-    @ConditionalOnMissingBean(value = {AuthorizationServerTokenServices.class})
+/*    @Bean
+    @ConditionalOnMissingBean(value = {AuthorizationServerTokenServices.class,DefaultTokenServices.class})
     public AuthorizationServerTokenServices tokenServices(ClientDetailsService jdbcClientDetailsService, TokenStore tokenStore) {
         DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
         defaultTokenServices.setSupportRefreshToken(true);// 支持令牌刷新
@@ -58,5 +58,5 @@ public class TokenConfiguration {
         defaultTokenServices.setClientDetailsService(jdbcClientDetailsService);// 设置客户端信息
         defaultTokenServices.setTokenStore(tokenStore);// 设置令牌存储策略
         return defaultTokenServices;
-    }
+    }*/
 }

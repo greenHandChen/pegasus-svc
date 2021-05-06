@@ -1,9 +1,11 @@
 package com.pegasus.security.sso.cas.processor;
 
 import com.pegasus.common.redis.RedisHelper;
+import com.pegasus.security.config.PeSecurityProperties;
 import com.pegasus.security.processors.SecurityProcessor;
 import com.pegasus.security.sso.cas.constants.CasConstant;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.stereotype.Component;
@@ -18,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  * @date 2021-03-24 16:39:32
  */
 @Component
+@ConditionalOnProperty(value = PeSecurityProperties.PREFIX + ".sso.enabled", havingValue = "true")
 public class CasSignOutPostProcessor implements SecurityProcessor {
     @Autowired
     private RedisHelper redisHelper;

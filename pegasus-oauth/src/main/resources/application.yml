@@ -44,9 +44,11 @@ pegasus:
   oauth:
     login:
       page: /login
+    logout:
+      page: /logout
     sso:
       # 是否启用sso
-      enabled: true
+      enabled: false
       # sso服务端
       server-url: http://localhost:9090/cas
       # sso登录地址
