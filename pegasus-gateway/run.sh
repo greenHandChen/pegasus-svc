@@ -21,4 +21,4 @@ kill -9 $(lsof -n -P -t -i:$MPORT)
 mv app.jar $JAR
 
 echo ">>> nohup java -jar -Xms128m -Xmx256m $JAR >app.log &"
-BUILD_ID=dontKillMe nohup java -jar -Xms128m -Xmx256m $JAR &
+BUILD_ID=dontKillMe nohup java -jar -Xms128m -Xmx256m $JAR > /root/app/logs/gateway.log &
