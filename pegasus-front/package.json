@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "cross-env API_HOST=http://localhost:8080 CLIENT_ID=localhost PORT=80 roadhog server",
-    "build": "cross-env API_HOST=http://192.168.209.135:8079 CLIENT_ID=dev PORT=80 roadhog build",
+    "build": "cross-env API_HOST=http://192.168.91.1:8080 CLIENT_ID=localhost PORT=80 roadhog build",
     "lint": "eslint --ext .js src test",
     "precommit": "npm run lint"
   },
