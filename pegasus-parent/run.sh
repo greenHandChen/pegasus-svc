@@ -9,7 +9,7 @@ mvn clean install  package
 echo ">>> cd target"
 cd target
 
-JAR=app.jar
+JAR=all.jar
 MPORT=8079
 
 echo ">>> kill -9 $(jps -ml | grep $JAR | awk '{print $1}')"

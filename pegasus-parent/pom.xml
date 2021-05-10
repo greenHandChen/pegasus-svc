@@ -161,35 +161,35 @@
         </pluginManagement>-->
     </build>
 
-<!--    &lt;!&ndash; 指定远程仓库(group组库)下载依赖(version带后缀-SNAPSHOT会从snapshot库下载) &ndash;&gt;-->
-<!--    <repositories>-->
-<!--        <repository>-->
-<!--            <id>PeRelease</id>-->
-<!--            <name>Pe-Release Repository</name>-->
-<!--            <url>http://192.168.91.131:8081/repository/nexus-group/</url>-->
-<!--            <snapshots>-->
-<!--                <enabled>false</enabled>-->
-<!--            </snapshots>-->
-<!--        </repository>-->
-<!--        <repository>-->
-<!--            <id>PeSnapshot</id>-->
-<!--            <name>Pe-Snapshot Repository</name>-->
-<!--            <url>http://192.168.91.131:8081/repository/nexus-group-snapshot/</url>-->
-<!--            <snapshots>-->
-<!--                <enabled>true</enabled>-->
-<!--            </snapshots>-->
-<!--        </repository>-->
-<!--    </repositories>-->
+    <!-- 指定远程仓库(group组库)下载依赖(version带后缀-SNAPSHOT会从snapshot库下载) -->
+    <repositories>
+        <repository>
+            <id>PeRelease</id>
+            <name>Pe-Release Repository</name>
+            <url>http://192.168.91.131:8081/repository/pegasus-group/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>PeSnapshot</id>
+            <name>Pe-Snapshot Repository</name>
+            <url>http://192.168.91.131:8081/repository/pegasus-group-snapshot/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
-<!--    &lt;!&ndash; 指定远程仓库(hosted托管库)依赖上传(version带-SNAPSHOT会上传到SNAPSHOT仓库) &ndash;&gt;-->
-<!--    <distributionManagement>-->
-<!--        <repository>-->
-<!--            <id>Pe-Release</id>-->
-<!--            <url>http://192.168.91.131:8081/repository/nexus-hosted/</url>-->
-<!--        </repository>-->
-<!--        <snapshotRepository>-->
-<!--            <id>Pe-Snapshot</id>-->
-<!--            <url>http://192.168.91.131:8081/repository/nexus-hosted-snapshot/</url>-->
-<!--        </snapshotRepository>-->
-<!--    </distributionManagement>-->
+    <!-- 指定远程仓库(hosted托管库)依赖上传(version带-SNAPSHOT会上传到SNAPSHOT仓库) -->
+    <distributionManagement>
+        <repository>
+            <id>Pe-Release</id>
+            <url>http://192.168.91.131:8081/repository/pegasus-hosted/</url>
+        </repository>
+        <snapshotRepository>
+            <id>Pe-Snapshot</id>
+            <url>http://192.168.91.131:8081/repository/pegasus-hosted-snapshot/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
