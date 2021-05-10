@@ -19,7 +19,7 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
 
     @PostConstruct
     private void init() {
-        this.setDefaultTargetUrl("http://localhost");
+        this.setDefaultTargetUrl("http://192.168.91.1");
     }
 
     @Override

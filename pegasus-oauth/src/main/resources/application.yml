@@ -3,7 +3,7 @@ spring:
     name: pegasus-oauth
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://dev.pegasus.com:3306/pegasus?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://dev.pegasus.db:3306/pegasus?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
     password: root
   jpa:
@@ -16,7 +16,7 @@ spring:
         format_sql: true
         use_sql_comments: true
   redis:
-    host: localhost
+    host: dev.pegasus.redis
     port: 6379
     database: 14
   #    password: ${SPRING_REDIS_PASSWORD:3pc4=1iv8n7.G4?S}

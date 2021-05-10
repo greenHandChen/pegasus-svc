@@ -20,5 +20,13 @@ public class Constant {
         ALLOW_ORIGIN.add("http://192.168.209.135");
         ALLOW_ORIGIN.add("http://192.168.209.135:80");
         ALLOW_ORIGIN.add("http://192.168.209.135:8000");
+
+        ALLOW_ORIGIN.add("http://192.168.91.1");
+        ALLOW_ORIGIN.add("http://192.168.91.1:80");
+        ALLOW_ORIGIN.add("http://192.168.91.1:8000");
+
+        ALLOW_ORIGIN.add("http://192.168.91.131");
+        ALLOW_ORIGIN.add("http://192.168.91.131:80");
+        ALLOW_ORIGIN.add("http://192.168.91.131:8000");
     }
 }
