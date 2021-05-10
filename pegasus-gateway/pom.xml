@@ -58,5 +58,31 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <finalName>app</finalName>
+        <plugins>
+            <!-- jar打包:必须配置该插件 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+        <!-- <pluginManagement>
+             <plugins>
+                 <plugin>
+                     <groupId>org.apache.maven.plugins</groupId>
+                     <artifactId>maven-jar-plugin</artifactId>
+                     <version>3.0.2</version>
+                     <configuration>
+                         <archive>
+                             <manifest>
+                                 <mainClass>com.pegasus.PegasusApplication</mainClass>
+                             </manifest>
+                         </archive>
+                     </configuration>
+                 </plugin>
+             </plugins>
+         </pluginManagement>-->
+    </build>
 
 </project>
