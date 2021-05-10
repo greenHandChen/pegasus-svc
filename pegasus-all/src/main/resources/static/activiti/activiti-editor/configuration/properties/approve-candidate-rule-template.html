@@ -122,7 +122,7 @@
           renderCandidateLov({
             id: 'chose-approver-table',
             title: '请选择候选审批人',
-            dataSource: 'http://localhost:8079/v1/activiti/approve-rule/list?enabled=true',
+            dataSource: 'http://192.168.91.131:8080/all/v1/activiti/approve-rule/list?enabled=true',
             selected: function (row) {
               var sourceId = jQuery(e.target).attr('id');
               dataSource.forEach(function (data) {

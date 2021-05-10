@@ -146,7 +146,7 @@ export default class ProcessDefinition extends React.Component {
         width: '15%',
         render: text => (
           <div style={{textAlign: 'center'}}>
-            <a href={`http://localhost:8079/all/activiti/modeler.html?modelId=${text}`} target={'_blank'}>
+            <a href={`http://192.168.91.131:8079/all/activiti/modeler.html?modelId=${text}`} target={'_blank'}>
               <Tag color="blue">编辑</Tag>
             </a>
             <Divider type="vertical"/>

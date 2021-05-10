@@ -16,7 +16,7 @@ spring:
         format_sql: true
         use_sql_comments: true
   redis:
-    host: localhost
+    host: dev.pegasus.redis
     port: 6379
 #    password: ${SPRING_REDIS_PASSWORD:3pc4=1iv8n7.G4?S}
   main:
