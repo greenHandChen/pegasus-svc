@@ -10,6 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = PeSecurityProperties.PREFIX)
 public class PeSecurityProperties {
     public static final String PREFIX = "pegasus.oauth";
+    private String defaultUrl;
 
     // 登录配置
     private Login login = new Login();
