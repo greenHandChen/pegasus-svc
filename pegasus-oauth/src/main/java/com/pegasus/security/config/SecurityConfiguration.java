@@ -3,6 +3,9 @@ package com.pegasus.security.config;
 import com.pegasus.security.CustomAuthenticationSuccessHandler;
 import com.pegasus.security.CustomLogoutSuccessHandler;
 import com.pegasus.security.custom.authentication.provider.NoUserDetailsAuthenticationProvider;
+import com.pegasus.security.oalogin.OALoginAuthenticationSuccessRedirectHandler;
+import com.pegasus.security.oalogin.OALoginFilter;
+import com.pegasus.security.oalogin.OALoginProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -17,6 +20,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
@@ -31,10 +35,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired(required = false)
     @Qualifier("noUserDetailsAuthenticationProvider")
     private NoUserDetailsAuthenticationProvider noUserDetailsAuthenticationProvider;
+    @Autowired(required = false)
+    @Qualifier("OALoginProvider")
+    private OALoginProvider oaLoginProvider;
     @Autowired
     private CustomAuthenticationSuccessHandler authenticationSuccessHandler;
     @Autowired
     private CustomLogoutSuccessHandler customLogoutSuccessHandler;
+    @Autowired
+    private OALoginAuthenticationSuccessRedirectHandler oaLoginAuthenticationSuccessRedirectHandler;
     @Autowired(required = false)
     private CasAuthenticationEntryPoint casAuthenticationEntryPoint;
     @Autowired
@@ -70,6 +79,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // 设置自定义provider
         httpSecurity.authenticationProvider(this.noUserDetailsAuthenticationProvider);
 
+        // 设置oa-filter
+        OALoginFilter oaLoginFilter = new OALoginFilter(authenticationManagerBean());
+        oaLoginFilter.setAuthenticationSuccessHandler(oaLoginAuthenticationSuccessRedirectHandler);
+        httpSecurity.addFilterBefore(oaLoginFilter, UsernamePasswordAuthenticationFilter.class);
+
         // 设置sso
         if (peSecurityProperties.getSso().isEnabled()) {
             httpSecurity.exceptionHandling().authenticationEntryPoint(casAuthenticationEntryPoint);
@@ -85,6 +99,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder builder) throws Exception {
         builder.userDetailsService(this.userDetailsService);
+        builder.authenticationProvider(oaLoginProvider);
     }
 
 
@@ -98,5 +113,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
+//    @Bean
+//    public OALoginFilter oaLoginFilter() throws Exception {
+//        return new OALoginFilter(authenticationManagerBean());
+//    }
 
 }

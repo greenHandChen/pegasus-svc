@@ -42,7 +42,7 @@ pegasus:
         grant-type: client_credentials
         authentication-scheme: form
   oauth:
-    default-url: http://192.168.91.131
+    default-url: http://localhost
     login:
       page: /login
     logout:

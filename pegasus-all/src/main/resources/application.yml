@@ -45,3 +45,8 @@ rocketmq:
 #spring security 5
   #1.必须配置passwordencoder
   #2.数据库存储的密码必须被passwordencoder加密
+
+hzero:
+  feign-gateway:
+    enabled: false
+    gateway-path: http://localhost:8080
